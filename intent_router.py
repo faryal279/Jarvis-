@@ -22,7 +22,7 @@ Classify the user's spoken command into EXACTLY one of these intents:
 2. "github_issues": User explicitly asks to find/search open source issues, projects, or beginner repositories to contribute to on GitHub (e.g. "find python projects on github", "suggest beginner issues").
    Parameter: The programming language or topic.
 
-3. "linkedin_caption": User wants to write or draft a post/caption for LinkedIn.
+3. "linkedin_caption": User wants to write or draft a post/caption for LinkedIn (e.g., "write a linkedin post about AI", "draft a post").
    Parameter: The topic of the post.
 
 4. "general_question": Questions, general talking, queries, commands that require an answer or information.
@@ -31,13 +31,14 @@ Classify the user's spoken command into EXACTLY one of these intents:
 Known website shortcuts: {KNOWN_SITES}
 
 Respond with ONLY valid JSON in this exact structure:
-{{{{\"intent\": \"...\", \"parameter\": \"...\"}}}}
+{{{{"intent": "...", "parameter": "..."}}}}
 
 Command: "{{command}}"
 """
 
 
 def _strip_code_fences(text: str) -> str:
+    """Cleans up markdown code fences from the LLM output."""
     text = text.strip()
     text = re.sub(r"^```(json)?", "", text, flags=re.IGNORECASE)
     text = re.sub(r"```$", "", text)
